@@ -41,6 +41,12 @@ module Capybara
             raise Capybara::Ambiguous.new("Ambiguous match, found #{result.size} elements matching #{query.description}")
           end
           if result.size == 0
+            if base.status_code == 500
+              if base.html.include?("Real HTTP connections are disabled. Unregistered request:")
+                raise Capybara::VCRError.new("VCR prevented an external request which caused: #{find("h1").text}")
+              end
+            end
+
             raise Capybara::ElementNotFound.new("Unable to find #{query.description}")
           end
           result.first
