@@ -44,6 +44,8 @@ module Capybara
             if base.status_code == 500
               if base.html.include?("Real HTTP connections are disabled. Unregistered request:")
                 raise Capybara::VCRError.new("VCR prevented an external request which caused: #{find("h1").text}")
+              elsif base.html.include?("Internal Server Error")
+                raise Capybara::InternalServerError.new("Internal Server Error: #{find("h1").text}")
               end
             end
 
