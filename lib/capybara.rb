@@ -18,6 +18,7 @@ module Capybara
   class ScopeError < CapybaraError; end
   class WindowError < CapybaraError; end
   class ReadOnlyElementError < CapybaraError; end
+  class InternalServerError < CapybaraError; end
 
   class << self
     attr_reader :app_host, :default_host
